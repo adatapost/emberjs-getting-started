@@ -1,6 +1,6 @@
 # Getting Started with Ember.js
 
-*This is an adaptation of SproutCore 2.0 Getting Started Guide*
+*This is an adaptation of the extinct SproutCore 2.0 Getting Started Guide*
 
 Check the application here: <http://frodsan.github.com/emberjs-getting-started>.
 
