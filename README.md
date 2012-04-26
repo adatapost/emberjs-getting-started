@@ -291,42 +291,63 @@ and in other guides.
 
 ## 8. Getting Things Done
 
-We now have the ability to add todos, but no way to mark them as done. Before the frustration of a never-ending todo list gets the better of us, let’s add the ability to mark todos complete.
+We now have the ability to add todos, but no way to mark them as done. Before the
+frustration of a never-ending todo list gets the better of us, let’s add the ability
+to mark todos complete.
 
-The first thing we need to do is add a checkbox to each todo list itEmber. As was mentioned earlier, if we want to handle events, such as user input, we need a view. In this case, we are adding a checkbox and want to be notified whenever the value of the checkbox is changed by the user. Let’s update the Handlebars template in `index.html` to look like the following:
+The first thing we need to do is add a checkbox to each todo list item. As was
+mentioned earlier, if we want to handle events, such as user input, we need a view.
+In this case, we are adding a checkbox and want to be notified whenever the value of
+the checkbox is changed by the user. Let’s update the Handlebars template in
+`index.html` to look like the following:
 
-```html
-<script type="text/x-handlebars">
-{{view Todos.CreateTodoView id="new-todo" 
-  placeholder="What needs to be done?"}}
- 
-{{#collection contentBinding="Todos.todosController" tagName="ul"}}
-  {{view Ember.Checkbox titleBinding="content.title"
-      valueBinding="content.isDone"}}
-{{/collection}}
-</script>
-```
-Let’s take a second to talk about the bindings we just set up. For every item in its underlying array, `Ember.CollectionView` will create a new item view whose `content` property contains the object the view should represent. In our case, there will be a child view for each todo. Since the checkbox is a child view of each item view, when we bind to `content.title`, we’re saying to bind to the `title` property of the Todo object represented by the item view.
+    <script type="text/x-handlebars">
+    {{view Todos.CreateTodoView id="new-todo" 
+      placeholder="What needs to be done?"}}
+     
+    {{#collection contentBinding="Todos.todosController" tagName="ul"}}
+      {{view Ember.Checkbox titleBinding="content.title"
+          valueBinding="content.isDone"}}
+    {{/collection}}
+    </script>
 
-Under the hood, Ember binds an event handler to the change event of the checkbox and updates value when the event occurs. This may change as needed for browser compatibility, but working with a Ember property insulates you from those concerns.
+Let’s take a second to talk about the bindings we just set up. For every item in its
+underlying array, `Ember.CollectionView` will create a new item view whose `content`
+property contains the object the view should represent. In our case, there will be a
+child view for each todo. Since the checkbox is a child view of each item view, when
+we bind to `content.title`, we’re saying to bind to the `title` property of the Todo
+object represented by the item view.
 
-Before you reload the browser to see the new checkbox todo list items, the stylesheet we provided includes a CSS class meant to give completed todos a unique look. Let’s bind the class of each item to the object’s `isDone` property.
+Under the hood, Ember binds an event handler to the change event of the checkbox
+and updates value when the event occurs. This may change as needed for browser
+compatibility, but working with a Ember property insulates you from those concerns.
+
+Before you reload the browser to see the new checkbox todo list items, the stylesheet
+we provided includes a CSS class meant to give completed todos a unique look. Let’s
+bind the class of each item to the object’s `isDone` property.
 
 We’ll use a property on the collection helper to set up this binding:
 
-```html
-{{#collection contentBinding="Todos.todosController" tagName="ul"
-  itemClassBinding="content.isDone"}}
-  {{view Èm.Checkbox titleBinding="content.title"
-    valueBinding="content.isDone"}}
-{{/collection}}
-```
+    {{#collection contentBinding="Todos.todosController"
+        tagName="ul" itemClassBinding="content.isDone"}}
+      {{view Ember.Checkbox titleBinding="content.title"
+          valueBinding="content.isDone"}}
+    {{/collection}}
 
-This property sets up a binding on each of the item views. Each item will get the class is-done if its associated content object’s `isDone` property is true. Ember will automatically dasherize property names into class names.
+This property sets up a binding on each of the item views. Each item will get the class
+is-done if its associated content object’s `isDone` property is true. Ember will
+automatically dasherize property names into class names.
 
-**All views have a number of properties, including id, class, and classBinding. The collection helper allows you to prefix any of those properties with item, which will then apply to each of the child item views. For instance, if you use the itemClass property on a collection, each item will get that class name.**
+**All views have a number of properties, including id, class, and classBinding. The
+collection helper allows you to prefix any of those properties with item, which will
+then apply to each of the child item views. For instance, if you use the itemClass
+property on a collection, each item will get that class name.**
 
-Now reload your application in the browser and try it out. As soon as you click a todo’s checkbox, the text will become crossed out. Keep in mind you didn’t need to update any views when marking the Todo as done; bindings did it for you. If a different part of the app changes the Todo item’s isDone property, your list item would automatically update without any more work on your part.
+Now reload your application in the browser and try it out. As soon as you click a
+todo’s checkbox, the text will become crossed out. Keep in mind you didn’t need to
+update any views when marking the Todo as done; bindings did it for you. If a
+different part of the app changes the Todo item’s `isDone` property, your list
+item would automatically update without any more work on your part.
 
 ## 9. The More You Know
 
