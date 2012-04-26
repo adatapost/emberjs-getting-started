@@ -128,30 +128,42 @@ Let’s define our model as a new subclass of `Ember.Object` in `app.js`:
 
 We’ve now defined a `Todo` class with two properties: `title` and `isDone`.
 
+**Note:** The Ember rules for capitalization are pretty straight-forward. If it's a
+class or a namespace, it's uppercase `Todo`; if it's an instance, it's lowercase
+`todosController`.
+
 ## 5. Managing the Model Using a Controller
+
+In MVC frameworks like Ember, the controller layer bridges the model layer, which is
+only concerned with a pure-data representation of objects, and the view layer, which is
+only concerned with representing those objects.
 
 Now that we know what our data looks like, let’s create a controller to manage it.
 Since we want to maintain an ordered list of todos, we’ll use an instance of 
 `Ember.ArrayController`.
 
-    Todos.todosController = Ember.ArrayController.create({});
+    Todos.todosController = Ember.ArrayController.create({
+      // Initialize the array controller with an empty array.
+      content: []
+    });
 
-**Note:** In MVC frameworks like Ember, the controller layer bridges the model layer,
-which is only concerned with a pure-data representation of objects, and the view layer,
-which is only concerned with representing those objects.
+Behind the scenes, `Ember.ArrayController` acts as a proxy onto its `content` Array
+property. Ember will propagate any modifications made to the `ArrayController` to the
+`content` property.
 
-Now we have an array controller with no content. Let’s add a method to create a new todo:
+Now we have an array controller with no content. Let’s add a method to create a new
+todo:
  
     Todos.todosController = Ember.ArrayController.create({
+      // Initialize the array controller with an empty array
+      content: [],
+
       // Creates a new todo with the passed title then adds it to the array
       createTodo: function(title) {
         var todo = Todos.Todo.create({ title: title });
         this.pushObject(todo);
       }
     });
-
-`Ember.ArrayController` acts as a proxy onto its `content` Array property. Ember will
-propagate any modifications made to the ArrayController to the content Array.
 
 ## 6. Doing It with Style
 
