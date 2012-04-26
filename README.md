@@ -486,69 +486,90 @@ making a change through new means has the expected effect.
 
 ## 11. Marking All as Done
 
-Let’s say you’ve decided to actually get all of your work done. Wouldn’t it be nice to have a way to easily mark every todo as complete?
+Let’s say you’ve decided to actually get all of your work done. Wouldn’t it be nice to
+have a way to easily mark every todo as complete?
 
-It turns out that, due to our application’s declarative nature, all the hard work is already done. We just need a way to mark every Todo complete.
+It turns out that, due to our application’s declarative nature, all the hard work is
+already done. We just need a way to mark every Todo complete.
 
-Let’s first create a new computed property on our controller that describes whether or not every todo is done. It might look something like this:
+Let’s first create a new computed property on our controller that describes whether
+or not every todo is done. It might look something like this:
 
-```javascript
-Todos.todosController = Ember.ArrayController.create({
- 
-  // ...
-  
-  clearCompletedTodos: function() {
-    this.filterProperty('isDone', true).forEach(this.removeObject, this);
-  },
+    Todos.todosController = Ember.ArrayController.create({
+      // Initialize the array controller with an empty array.
+      content: [],
+     
+      // Creates a new todo with the passed title, then adds it to the array.
+      createTodo: function(title) {
+        var todo = Todos.Todo.create({ title: title });
 
-  allAreDone: function() {
-    return this.get('length') && this.everyProperty('isDone', true);
-  }.property('@each.isDone')
-});
-```
+        this.pushObject(todo);
+      },
 
-**Ember has many enumerable helpers. everyProperty(‘isDone’, true) returns true if every item in the array has an isDone property that evaluates to true. You can find out more in the [Enumerables guide](http://guides.sproutcore20.com/enumerables.html).**
+      remaining: function() {
+        return this.filterProperty('isDone', false).get('length');
+      }.property('@each.isDone'),
+      
+      clearCompletedTodos: function() {
+        this.filterProperty('isDone', true).forEach(this.removeObject, this);
+      },
 
-Next, open `index.html`, we’ll create a checkbox view to mark all items complete and bind its value to the controller’s property:
+      allAreDone: function() {
+        return this.get('length') && this.everyProperty('isDone', true);
+      }.property('@each.isDone')
+    });
 
-```html
-<!-- directly below the Todos.StatsView -->
- 
-{{view Ember.Checkbox class="mark-all-done"
-  title="Mark All as Done"
-  valueBinding="Todos.todosController.allAreDone"}}
-```
+**Ember has many enumerable helpers. `everyProperty(‘isDone’, true)` returns true if
+every item in the array has an `isDone` property that evaluates to true. You can
+find out more in the [Enumerables guide](http://emberjs.com/#toc_the-ember-enumerable-api)**
 
-If you were to reload your browser and use the app now, you’d notice that clicking all of the checkboxes of your todos will cause the “Mark All as Done” checkbox to become checked. However, it doesn’t work in the other direction: clicking “Mark All as Done” has no effect.
+Next, open `index.html`, we’ll create a checkbox view to mark all items complete and
+bind its value to the controller’s property:
 
-So far, our computed properties have described how to calculate a value from dependent properties. However, in this case, we want to accept a new value, and update dependent properties to reflect it. Lets update our `allAreDone` computed property to also accept a value.
+    {{view Ember.Checkbox class="mark-all-done"
+        title="Mark All as Done"
+        valueBinding="Todos.todosController.allAreDone"}}
 
-```javascript
-// updating existing code
- 
-Todos.todosController = Ember.ArrayController.create({
- 
-  // ...
- 
-  allAreDone: function(key, value) {
-    if (value !== undefined) {
-      this.setEach('isDone', value);
- 
-      return value;
-    } else {
-      return !!this.get('length') && this.everyProperty('isDone', true);
-    }
-  }.property('@each.isDone')
-});
-```
+    {{#collection contentBinding="Todos.todosController"
+    ...
 
-When you set a computed property, your computed property function is called with the property key as the first parameter and the new value as the second. To determine if Ember is asking for the value or trying to set it, we examine the `value parameter`. If it is defined, we iterate through each Todo and set its `isDone` property to the new value.
+If you were to reload your browser and use the app now, you’d notice that clicking all
+of the checkboxes of your todos will cause the **“Mark All as Done”** checkbox to
+become checked. However, it doesn’t work in the other direction: clicking **“Mark All
+as Done”** has no effect.
 
-Because bindings are bi-directional, Ember will set `allAreDone` to true when the user clicks the “Mark All as Done” checkbox. Conversely, unchecking it will make Ember set `allAreDone` to false, unchecking all todos.
+So far, our computed properties have described how to calculate a value from dependent
+properties. However, in this case, we want to accept a new value, and update dependent
+properties to reflect it. Lets update our `allAreDone` computed property to also accept
+a value.
 
-Reload the app and add some todos. Click “Mark All as Done”. Wow! Each of the individual check boxes gets checked off. If you uncheck one of them, the “Mark All as Done” checkbox un-checks itself.
+    allAreDone: function(key, value) {
+      if (value !== undefined) {
+        this.setEach('isDone', value);
+        return value;
+      } else {
+        return !!this.get('length') && this.everyProperty('isDone', true);
+      }
+    }.property('@each.isDone')
 
-**When you use Ember, as you scale your UI, you never need to wonder whether a new feature will work consistently with parts of the UI you already implemented. Since you build your view layer to simply reflect the state of your models, you can make changes however you want and see them update automatically.**
+When you set a computed property, your computed property function is called with the
+property key as the first parameter and the new value as the second. To determine if
+Ember is asking for the value or trying to set it, we examine the `value` parameter.
+If it is defined, we iterate through each Todo and set its `isDone` property to the
+new value.
+
+Because bindings are bi-directional, Ember will set `allAreDone` to true when the user
+clicks the **“Mark All as Done”** checkbox. Conversely, unchecking it will make Ember
+set `allAreDone` to false, unchecking all todos.
+
+Reload the app and add some todos. Click “Mark All as Done”. Wow! Each of the
+individual check boxes gets checked off. If you uncheck one of them, the
+“Mark All as Done” checkbox un-checks itself.
+
+**When you use Ember, as you scale your UI, you never need to wonder whether a new
+feature will work consistently with parts of the UI you already implemented. Since
+you build your view layer to simply reflect the state of your models, you can make
+changes however you want and see them update automatically.**
 
 ## Resources:
 
