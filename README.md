@@ -140,7 +140,7 @@ only concerned with representing those objects.
 
 Now that we know what our data looks like, let’s create a controller to manage it.
 Since we want to maintain an ordered list of todos, we’ll use an instance of 
-`Ember.ArrayController`.
+`Ember.ArrayController`:
 
     Todos.todosController = Ember.ArrayController.create({
       // Initialize the array controller with an empty array.
@@ -167,11 +167,11 @@ todo:
 
 ## 6. Doing It with Style
 
-We’ve provided a simple stylesheet to give the application some style. Download the [CSS file](https://raw.github.com/frodsan/emberjs-getting-started/master/css/todos.css), add it to your project’s `css` directory, then include it in your `index.html` `<head>` tag:
+We’ve provided a simple stylesheet to give the application some style. Download the
+[CSS file](https://raw.github.com/frodsan/emberjs-getting-started/master/css/todos.css),
+add it to your project’s `css` directory, then include to the `<head>` tag in `index.html`:
 
-```html
-<link rel="stylesheet" href="css/todos.css">
-```
+    <link rel="stylesheet" href="css/todos.css">
 
 ## 7. Creating New Todos with a Text Field
 
