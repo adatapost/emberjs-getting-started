@@ -168,8 +168,9 @@ todo:
 ## 6. Doing It with Style
 
 We’ve provided a simple stylesheet to give the application some style. Download the
-[CSS file](https://raw.github.com/frodsan/emberjs-getting-started/master/css/todos.css),
-add it to your project’s `css` directory, then include to the `<head>` tag in `index.html`:
+[CSS file](https://raw.github.com/frodsan/emberjs-getting-started/master/css/todos.css)
+and add it to your project’s `css` directory. Then include the next line to the 
+`<head>` tag in `index.html`:
 
     <link rel="stylesheet" href="css/todos.css">
 
