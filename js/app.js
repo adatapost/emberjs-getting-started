@@ -1,7 +1,7 @@
 window.Todos = Ember.Application.create();
 
 Todos.Todo = Ember.Object.extend({
-  title: null,
+  title:  null,
   isDone: false
 });
  

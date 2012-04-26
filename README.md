@@ -116,20 +116,17 @@ This code creates a namespace for your application called `Todos`.
 
 ## 4. Defining Your Model
 
-In this tutorial, we want to create a list for managing todos. Users should be able to create a new todo with a specific task, then check it off once it’s done.
+In this tutorial, we want to create a list for managing todos. Users should be able
+to create a new todo with a specific task, then check it off once it’s done.
 
-Let’s define our model as a new subclass of Ember.Object in the `js/app.js` file:
+Let’s define our model as a new subclass of `Ember.Object` in `app.js`:
 
-```javascript
-Todos.Todo = Ember.Object.extend({
-  title: null,
-  isDone: false
-});
-```
+    Todos.Todo = Ember.Object.extend({
+      title:  null,
+      isDone: false
+    });
 
-*Make sure you insert the new code after the Todos object is created.*
-
-We’ve now defined a class with two properties: `title`, a String, and `isDone`, a Boolean.
+We’ve now defined a `Todo` class with two properties: `title` and `isDone`.
 
 ## 5. Managing the Model Using a Controller
 
