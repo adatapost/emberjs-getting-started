@@ -158,7 +158,7 @@ todo:
       // Initialize the array controller with an empty array
       content: [],
 
-      // Creates a new todo with the passed title then adds it to the array
+      // Creates a new todo with the passed title, then adds it to the array
       createTodo: function(title) {
         var todo = Todos.Todo.create({ title: title });
 
@@ -404,8 +404,7 @@ property to `todosController` in `app.js`:
       // Initialize the array controller with an empty array.
       content: [],
      
-      // Creates a new todo with the passed title, then adds it
-      // to the array.
+      // Creates a new todo with the passed title, then adds it to the array.
       createTodo: function(title) {
         var todo = Todos.Todo.create({ title: title });
 
@@ -433,43 +432,57 @@ presentation layer.
 
 ## 10. Clearing Completed Todos
 
-As we populate our list with todos, we may want to periodically clear out those we’ve completed. As you have learned, we will want to make that change to the todosController, and let Ember automatically propagate those changes to the DOM.
+As we populate our list with todos, we may want to periodically clear out those we’ve
+completed. As you have learned, we will want to make that change to the
+`todosController`, and let Ember automatically propagate those changes to the DOM.
 
-Let’s add a new `clearCompletedTodos` method to `todosController`.
+Let’s add a new `clearCompletedTodos` method to `Todos.todosController`.
 
-```javascript
-// updating existing code
- 
-Todos.todosController = Ember.ArrayController.create({
- 
-  // ...
-  remaining: function() {
-    return this.filterProperty('isDone', false).get('length');
-  }.property('@each.isDone'),
- 
-  clearCompletedTodos: function() {
-    this.filterProperty('isDone', true).forEach(this.removeObject, this);
-  }
-});
-```
-Next, let’s add a button to our template. Open `index.html` and add a button inside the HTML for `StatsView` as shown here:
+    Todos.todosController = Ember.ArrayController.create({
+      // Initialize the array controller with an empty array.
+      content: [],
+     
+      // Creates a new todo with the passed title, then adds it to the array.
+      createTodo: function(title) {
+        var todo = Todos.Todo.create({ title: title });
 
-```html
-{{#view Todos.StatsView id="stats"}}
-  {{#view Ember.Button classBinding="isActive"
-    target="Todos.todosController"
-    action="clearCompletedTodos"}}
-    Clear Completed Todos
-  {{/view}}
-  {{remainingString}} remaining.
-{{/view}}
-```
+        this.pushObject(todo);
+      },
 
-We’ve defined an instance of Ember.Button, which calls a method on an object when it is clicked. In this case we’ve told the button to call the `clearCompletedTodos` method (its action) on the `Todos.todosController` object (its target).
+      remaining: function() {
+        return this.filterProperty('isDone', false).get('length');
+      }.property('@each.isDone'),
+     
+      clearCompletedTodos: function() {
+        this.filterProperty('isDone', true).forEach(this.removeObject, this);
+      }
+    });
 
-We’ve also told it to add an `is-active class` to the view when it is clicked or tapped. Every Ember.Button has an `isActive` property that will be true when it is in the process of being clicked. This allows us to display a visual cue to the user that they have hit the right target.
+Next, let’s add a button to our template. Open `index.html` and add a `Ember.Button`
+control inside the HTML for `StatsView` as shown here:
 
-Go back to your browser and try it out. Add some todos, then mark them done and clear thEmber. Because we previously bound the visual list to the `todosController`, making a change through new means has the expected effect.
+    {{#view Todos.StatsView id="stats"}}
+      {{#view Ember.Button classBinding="isActive"
+          target="Todos.todosController"
+          action="clearCompletedTodos"}}
+        Clear Completed Todos
+      {{/view}}
+
+      {{remainingString}} remaining.
+    {{/view}}
+
+We’ve defined an instance of `Ember.Button`, which calls a method on an object when it
+is clicked. In this case we’ve told the button to call the `clearCompletedTodos` method
+(its `action`) on the `Todos.todosController` object (its `target`).
+
+We’ve also told it to add an `is-active` class to the view when it is clicked or
+tapped. Every `Ember.Button` has an `isActive` property that will be true when it is
+in the process of being clicked. This allows us to display a visual cue to the user
+that they have hit the right target.
+
+Go back to your browser and try it out. Add some todos, then mark them done and
+clear them. Because we previously bound the visual list to the `todosController`,
+making a change through new means has the expected effect.
 
 ## 11. Marking All as Done
 
