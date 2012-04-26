@@ -464,9 +464,7 @@ Reload the app and add some todos. Click “Mark All as Done”. Wow! Each of th
 
 ## Resources:
 
-* Documentation: <http://emberjs.com/>
+* Ember.js docs: <http://emberjs.com/>
 * Github Repository: <https://github.com/emberjs/ember.js>
 * Wiki: <https://github.com/emberjs/ember.js/wiki>
-
-Thanks,
-[@frodsan](https://twitter.com/frodsan)
+* IRC Channel: #emberjs
