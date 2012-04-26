@@ -203,7 +203,7 @@ via CSS), as well as a placeholder attribute that will be displayed in modern HT
 browsers.
 
 **For more information about using Handlebars, visit the [Handlebars website](http://www.handlebarsjs.com/).
-To learn more about using Handlebars with Ember, make sure to check out the [Using Handlebars Templates guide](http://emberjs.com/#toc_describing-your-ui-with-handlebars).
+To learn more about using Handlebars with Ember, make sure to check out the [Using Handlebars Templates guide](http://emberjs.com/#toc_describing-your-ui-with-handlebars).**
 
 Now that we’ve got model, view, and controller represented, it’s time to open the app
 in our browser and see how it looks.
