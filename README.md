@@ -129,8 +129,8 @@ Let’s define our model as a new subclass of `Ember.Object` in `app.js`:
 We’ve now defined a `Todo` class with two properties: `title` and `isDone`.
 
 **Note:** The Ember rules for capitalization are pretty straight-forward. If it's a
-class or a namespace, it's uppercase `Todo`; if it's an instance, it's lowercase
-`todosController`.
+class or a namespace, it's uppercase (`Todo`); if it's an instance, it's lowercase
+(`todosController`).
 
 ## 5. Managing the Model Using a Controller
 
