@@ -302,13 +302,13 @@ the checkbox is changed by the user. Let’s update the Handlebars template in
 `index.html` to look like the following:
 
     <script type="text/x-handlebars">
-    {{view Todos.CreateTodoView id="new-todo" 
-      placeholder="What needs to be done?"}}
-     
-    {{#collection contentBinding="Todos.todosController" tagName="ul"}}
-      {{view Ember.Checkbox titleBinding="content.title"
-          valueBinding="content.isDone"}}
-    {{/collection}}
+      {{view Todos.CreateTodoView id="new-todo" 
+        placeholder="What needs to be done?"}}
+       
+      {{#collection contentBinding="Todos.todosController" tagName="ul"}}
+        {{view Ember.Checkbox titleBinding="content.title"
+            valueBinding="content.isDone"}}
+      {{/collection}}
     </script>
 
 Let’s take a second to talk about the bindings we just set up. For every item in its
