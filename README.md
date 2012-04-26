@@ -303,7 +303,7 @@ the checkbox is changed by the user. Let’s update the Handlebars template in
 
     <script type="text/x-handlebars">
       {{view Todos.CreateTodoView id="new-todo" 
-        placeholder="What needs to be done?"}}
+          placeholder="What needs to be done?"}}
        
       {{#collection contentBinding="Todos.todosController" tagName="ul"}}
         {{view Ember.Checkbox titleBinding="content.title"
