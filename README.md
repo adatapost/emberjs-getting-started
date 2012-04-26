@@ -326,7 +326,7 @@ Before you reload the browser to see the new checkbox todo list items, the style
 we provided includes a CSS class meant to give completed todos a unique look. Let’s
 bind the class of each item to the object’s `isDone` property.
 
-We’ll use a property on the collection helper to set up this binding:
+We’ll use `itemClassBinding` property on the collection helper to set up this binding:
 
     {{#collection contentBinding="Todos.todosController"
         tagName="ul" itemClassBinding="content.isDone"}}
