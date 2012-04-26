@@ -1,13 +1,10 @@
 # Getting Started with Ember.js
 
+*This is an adaptation of SproutCore 2.0 Getting Started Guide*
+
 Check the application here: <http://frodsan.github.com/emberjs-getting-started>.
 
-## 1. Installing Ember
-
-Download the lastest [Ember.js Starter Kit](https://github.com/downloads/emberjs/starter-kit/starter-kit.0.9.7.1.zip)
-if you haven’t already. Unzip it and open the directory in your favorite text editor.
-
-## 2. Core Concepts
+## 1. Core Concepts
 
 These are the three features that make Ember a joy to use:
 
@@ -99,7 +96,12 @@ matter how the underlying data changes, whether from an XHR request or the user
 performing an action; your user interface always stays up-to-date. This eliminates
 entire categories of edge cases that developers struggle with every day.
 
-## 3. Create the Application Namespace
+## 2. Installing Ember
+
+Download the lastest [Ember.js Starter Kit](https://github.com/downloads/emberjs/starter-kit/starter-kit.0.9.7.1.zip)
+if you haven’t already. Unzip it and open the directory in your favorite text editor.
+
+## 3. Creating the Application Namespace
 
 Every Ember app should have an instance of `Ember.Application`. This object will
 serve as the globally-accessible namespace for all of the other classes and instances
