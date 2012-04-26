@@ -6,7 +6,7 @@ Check the application here: <http://frodsan.github.com/emberjs-getting-started>.
 
 ## 1. Installing Ember
 
-Download the lastest [Ember.js Starter Kit](https://github.com/emberjs/starter-kit/downloads)
+Download the lastest [Ember.js Starter Kit](https://github.com/downloads/emberjs/starter-kit/starter-kit.0.9.7.1.zip")
 if you haven’t already. Unzip it and open the directory in your favorite text editor.
 
 ## 2. Core Concepts
