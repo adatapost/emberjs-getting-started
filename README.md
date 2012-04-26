@@ -161,6 +161,7 @@ todo:
       // Creates a new todo with the passed title then adds it to the array
       createTodo: function(title) {
         var todo = Todos.Todo.create({ title: title });
+
         this.pushObject(todo);
       }
     });
@@ -351,63 +352,84 @@ item would automatically update without any more work on your part.
 
 ## 9. The More You Know
 
-We can now create todos and mark them as being complete. While 76% of all statistics are made up, let’s see if we can display more accurate information from the data we have. At the top of our list, let’s display the number of todos remaining. Open `index.html` and insert this new view:
+We can now create todos and mark them as being complete. While 76% of all statistics
+are made up, let’s see if we can display more accurate information from the data we
+have. At the top of our list, let’s display the number of todos remaining. Open
+`index.html` and insert this new view before `{{#collection}}` helper:
 
-```html
-<!-- Insert this after the CreateTodoView and before the collection. -->
-{{#view Todos.StatsView id="stats"}}
-  {{remainingString}} remaining
-{{/view}}
-```
+    {{#view Todos.StatsView id="stats"}}
+      {{remainingString}} remaining
+    {{/view}}
 
-Handlebars expressions, like `{{remainingString}}`, allows us to automatically update the DOM when a property on our view changes. In this case, we’re saying that Todos.StatsView should always display the most up-to-date value to the view’s `remainingString` property. As with the other bindings, this will be updated for us automatically whenever the value changes.
+Handlebars expressions, like `{{remainingString}}`, allows us to automatically update
+the DOM when a property on our view changes. In this case, we’re saying that
+`Todos.StatsView` should always display the most up-to-date value to the view’s
+`remainingString` property. As with the other bindings, this will be updated for us
+automatically whenever the value changes.
 
 Let’s go ahead and implement that view in `app.js` now:
 
-```javascript
-Todos.StatsView = Ember.View.extend({
-  remainingBinding: 'Todos.todosController.remaining',
+    Todos.StatsView = Ember.View.extend({
+      remainingBinding: 'Todos.todosController.remaining',
+     
+      remainingString: function() {
+        var remaining = this.get('remaining');
+
+        return remaining + (remaining === 1 ? " item" : " items");
+      }.property('remaining')
+    });
+
+`remainingString` contains a pluralized string, based on the number of remaining todos.
+Here is another core piece of Ember in action, this one called a computed property.
+Computed properties are properties whose value is determined by running a function.
+For example, if `remaining` equals 1, `remainingString` will contain the string
+"1 item", and if `remaining` is greater than 1, `remainingString` will contain
+the string "X items".
+
+We say that `remainingString` **depends on** `remaining` because it requires another
+value to generate its own value. We list these **dependent keys** inside the
+`property()` declaration.
+
+We’ve also bound the view’s `remaining` property to the todosController‘s
+`remaining` property. This means that, because of the dependency chain we’ve described,
+if `Todos.todosController.remaining` changes, remainingString will automatically
+update.
+
+When we have information that views need but is based on aggregate information about
+our models, the array controller is a good place to put it. Let’s add a new computed
+property to `todosController` in `app.js`:
+
  
-  remainingString: function() {
-    var remaining = this.get('remaining');
-    return remaining + (remaining === 1 ? " item" : " items");
-  }.property('remaining')
-});
-```
+    Todos.todosController = Ember.ArrayController.create({
+      // Initialize the array controller with an empty array.
+      content: [],
+     
+      // Creates a new todo with the passed title, then adds it
+      // to the array.
+      createTodo: function(title) {
+        var todo = Todos.Todo.create({ title: title });
 
-`remainingString` contains a pluralized string, based on the number of remaining todos. Here is another core piece of Ember in action, this one called a computed property. Computed properties are properties whose value is determined by running a function. For example, if `remaining` equals 1, `remainingString` will contain the string "1 item".
+        this.pushObject(todo);
+      },
+     
+      remaining: function() {
+        return this.filterProperty('isDone', false).get('length');
+      }.property('@each.isDone')
+    });
 
-We say that `remainingString` **depends on** `remaining` because it requires another value to generate its own value. We list these **dependent keys** inside the `property()` declaration.
-
-We’ve also bound the view’s `remaining` property to the todosController‘s `remaining property`. This means that, because of the dependency chain we’ve described, if Todos.todosController.remaining changes, remainingString will automatically update.
-
-When we have information that views need but is based on aggregate information about our models, the array controller is a good place to put it. Let’s add a new computed property to `todosController` in `app.js`:
-
-
-```javascript
-// updating previous code
- 
-Todos.todosController = Ember.ArrayController.create({
- 
-  // ...
-  createTodo: function(title) {
-    var todo = Todos.Todo.create({ title: title });
-    this.pushObject(todo);
-  },
- 
-  remaining: function() {
-    return this.filterProperty('isDone', false).get('length');
-  }.property('@each.isDone')
-});
-```
-
-Here, we specify our dependent key using `@each`. This allows us to depend on properties of the array’s items. In this case, we want to update the remaining property any time `isDone` changes on a Todo.
+Here, we specify our dependent key using `@each`. This allows us to depend on
+properties of the array’s items. In this case, we want to update the remaining property
+any time `isDone` changes on a Todo.
 
 **The @each property also updates when an item is added or removed.**
 
-It’s important to declare dependent keys because Ember uses this information to know when to update bindings. In our case, our StatsView updates any time todosController’s remaining property changes.
+It’s important to declare dependent keys because Ember uses this information to know
+when to update bindings. In our case, our `Todos.StatsView` updates any time
+todosController’s remaining property changes.
 
-As we build up our application, we create **declarative** links between objects. These links describe how application state flows from the model layer to the HTML in the presentation layer.
+As we build up our application, we create **declarative** links between objects. These
+links describe how application state flows from the model layer to the HTML in the
+presentation layer.
 
 ## 10. Clearing Completed Todos
 

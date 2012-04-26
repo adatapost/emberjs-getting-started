@@ -13,6 +13,7 @@ Todos.todosController = Ember.ArrayController.create({
   // to the array.
   createTodo: function(title) {
     var todo = Todos.Todo.create({ title: title });
+
     this.pushObject(todo);
   },
 
@@ -51,6 +52,7 @@ Todos.StatsView = Ember.View.extend({
  
   remainingString: function() {
     var remaining = this.get('remaining');
+
     return remaining + (remaining === 1 ? " item" : " items");
   }.property('remaining')
 });
