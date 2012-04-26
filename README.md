@@ -335,7 +335,7 @@ We’ll use `itemClassBinding` property on the collection helper to set up this 
     {{/collection}}
 
 This property sets up a binding on each of the item views. Each item will get the class
-is-done if its associated content object’s `isDone` property is true. Ember will
+`is-done` if its associated content object’s `isDone` property is true. Ember will
 automatically dasherize property names into class names.
 
 **All views have a number of properties, including id, class, and classBinding. The
