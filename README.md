@@ -103,15 +103,18 @@ matter how the underlying data changes, whether from an XHR request or the user
 performing an action; your user interface always stays up-to-date. This eliminates
 entire categories of edge cases that developers struggle with every day.
 
-## 3. Create the Namespace
+## 3. Create the Application Namespace
 
-Open the JavaScript file located at `js/app.js`. Replace the default contents with the following:
+Every Ember app should have an instance of `Ember.Application`. This object will
+serve as the globally-accessible namespace for all of the other classes and instances
+in your app.
 
-```javascript
-var Todos = Ember.Application.create();
-```
+Open the JavaScript file located at `js/app.js`. Replace the default content with the
+following:
 
-This code creates a namespace for your application (called Todos), which is also an instance of Ember.Application. **It is important that every Ember app creates an instance of Ember.Application, because it is responsible for routing browser events to your views.**
+    window.Todos = Ember.Application.create();
+
+This code creates a namespace for your application called `Todos`.
 
 ## 4. Defining Your Model
 

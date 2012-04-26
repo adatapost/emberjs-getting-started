@@ -1,4 +1,4 @@
-Todos = Ember.Application.create();
+window.Todos = Ember.Application.create();
 
 Todos.Todo = Ember.Object.extend({
   title: null,
