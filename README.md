@@ -421,7 +421,7 @@ Here, we specify our dependent key using `@each`. This allows us to depend on
 properties of the array’s items. In this case, we want to update the remaining property
 any time `isDone` changes on a Todo.
 
-**The @each property also updates when an item is added or removed.**
+**The `@each` property also updates when an item is added or removed.**
 
 It’s important to declare dependent keys because Ember uses this information to know
 when to update bindings. In our case, our `Todos.StatsView` updates any time
