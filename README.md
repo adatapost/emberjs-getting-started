@@ -1,7 +1,5 @@
 # Getting Started with Ember.js
 
-*This is an adaptation of SproutCore 2.0 Getting Started Guide*
-
 Check the application here: <http://frodsan.github.com/emberjs-getting-started>.
 
 ## 1. Installing Ember
@@ -10,8 +8,6 @@ Download the lastest [Ember.js Starter Kit](https://github.com/downloads/emberjs
 if you haven’t already. Unzip it and open the directory in your favorite text editor.
 
 ## 2. Core Concepts
-
-*Source: [Ember.js Website](http://emberjs.com/)*
 
 These are the three features that make Ember a joy to use:
 
