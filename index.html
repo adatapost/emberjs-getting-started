@@ -25,7 +25,7 @@
 
   <script type="text/x-handlebars">
     {{view Todos.CreateTodoView id="new-todo" 
-      placeholder="What needs to be done?"}}
+        placeholder="What needs to be done?"}}
      
     {{#view Todos.StatsView id="stats"}}
       {{#view Ember.Button classBinding="isActive"
@@ -40,8 +40,8 @@
       title="Mark All as Done"
       valueBinding="Todos.todosController.allAreDone"}}
 
-    {{#collection contentBinding="Todos.todosController" tagName="ul"
-      itemClassBinding="content.isDone"}}
+    {{#collection contentBinding="Todos.todosController"
+        tagName="ul" itemClassBinding="content.isDone"}}
       {{view Ember.Checkbox titleBinding="content.title"
         valueBinding="content.isDone"}}
     {{/collection}}

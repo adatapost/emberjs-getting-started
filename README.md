@@ -176,88 +176,118 @@ and add it to your project’s `css` directory. Then include the next line to th
 
 ## 7. Creating New Todos with a Text Field
 
-We’ve got our model and controller set up, so let’s move on to the fun part: creating the interface for our users. The first step is to create a text field into which the user types the name of their todo. Ember uses Handlebars templates to quickly define the application’s interface. While Handlebars makes it easy to markup HTML quickly, you’ll see that it also has been extended to automatically take advantage of Ember's bindings.
+We’ve got our model and controller set up, so let’s move on to the fun part: creating
+the interface for our users. The first step is to create a text field into which the
+user types the name of their todo. Ember uses Handlebars templates to quickly define
+the application’s interface. While Handlebars makes it easy to markup HTML quickly,
+you’ll see that it also has been extended to automatically take advantage of Ember's
+bindings.
 
 To start building our views, let’s open `index.html`.
 
 First, add an `<h1>` tag with the name of the application:
 
-```html
-<h1>Todos</h1>
-```
+    <h1>Todos</h1>
 
-You’ll also see that the starter kit includes a default Handlebars template. Remove it and replace it with the following Handlebars template, which emits a text field for our users to type in:
+You’ll also see that the starter kit includes a default Handlebars template. Remove it
+and replace it with the following Handlebars template, which emits a text field for our
+users to type in:
 
-```html
-<script type="text/x-handlebars">
-  {{view Ember.TextField id="new-todo" placeholder="What needs to be done?"}}
-</script>
-```
+    <script type="text/x-handlebars">
+      {{view Ember.TextField id="new-todo"
+          placeholder="What needs to be done?"}}
+    </script>
 
-**Make sure you remove the stub template in index.html that is included in the starter kit.**
+Here we’ve specified a text field, with a unique id attribute (so it can be styled
+via CSS), as well as a placeholder attribute that will be displayed in modern HTML5
+browsers.
 
-Here we’ve specified a text field, with a unique id attribute (so it can be styled via CSS), as well as a placeholder attribute that will be displayed in modern HTML5 browsers.
+**For more information about using Handlebars, visit the [Handlebars website](http://www.handlebarsjs.com/).
+To learn more about using Handlebars with Ember, make sure to check out the [Using Handlebars Templates guide](http://emberjs.com/#toc_describing-your-ui-with-handlebars).
 
-**For more information about using Handlebars, visit the [Handlebars website](http://www.handlebarsjs.com/). To learn more about using Handlebars with Ember, make sure to check out the [Using Handlebars Templates guide](http://guides.sproutcore20.com/using_handlebars.html).**
+Now that we’ve got model, view, and controller represented, it’s time to open the app
+in our browser and see how it looks.
 
-Now that we’ve got model, view, and controller represented, it’s time to open the app in our browser and see how it looks.
+Double click on your `index.html` file to open it in your browser. You should see your
+application load. Once you’ve verified that the application is up and running, it’s
+time to tell Ember how to handle events for your `<input>` tag.
 
-Double click on your `index.html` file to open it in your browser. You should see your application load. Once you’ve verified that the application is up and running, it’s time to tell Ember how to handle events for your `<input>` tag. When the user types in the field and presses the return key, we will create a new Todo and have it inserted into the content of the array controller.
+When the user types in the field and presses the return key, we will create a new Todo
+and have it inserted into the content of the array controller.
 
-**In Ember, view objects are responsible for updating the DOM and handling events. Among other things, this allows us to buffer changes to the DOM for maximum performance and to support generic cross-platform event handling. Whenever you want to display dynamic content or handle events, you will use a view object.**
+**In Ember, view objects are responsible for updating the DOM and handling events.
+Among other things, this allows us to buffer changes to the DOM for maximum performance
+and to support generic cross-platform event handling. Whenever you want to display
+dynamic content or handle events, you will use a view object.**
 
 Insert this code in `js/app.js` file:
 
-```javascript
-Todos.CreateTodoView = Ember.TextField.extend({
-  insertNewline: function() {
-    var value = this.get('value');
- 
-    if (value) {
-      Todos.todosController.createTodo(value);
-      this.set('value', '');
-    }
-  }
-});
-```
+    Todos.CreateTodoView = Ember.TextField.extend({
+      insertNewline: function() {
+        var value = this.get('value');
+     
+        if (value) {
+          Todos.todosController.createTodo(value);
+          this.set('value', '');
+        }
+      }
+    });
 
-Since `CreateTodoView` will handle events for a text field, we create a subclass of Ember.TextField, which provides several conveniences for working with these input controls. For example, you can access the `value` property and respond to higher level events, such as `insertNewline`, when the user presses enter.
+Since `CreateTodoView` will handle events for a text field, we create a subclass of
+`Ember.TextField`, which provides several conveniences for working with these input
+controls. For example, you can access the `value` property and respond to higher level
+events, such as `insertNewline`, when the user presses enter.
 
-Now that we have defined our view, let’s update the template to use our new view subclass. Switch back to `index.html` and update the view helper to say `Todos.CreateTodoView` instead of `Ember.TextField`.
+Now that we have defined our view, let’s update the template to use our new view
+subclass. Switch back to `index.html` and update the view helper to say
+`Todos.CreateTodoView` instead of `Ember.TextField`.
 
-```html
-<h1>Todos</h1>
+    <script type="text/x-handlebars">
+      {{view Todos.CreateTodoView id="new-todo" 
+          placeholder="What needs to be done?"}}
+    </script>
 
-<script type="text/x-handlebars">
-  {{view Todos.CreateTodoView id="new-todo" 
-    placeholder="What needs to be done?"}}
-</script>
-```
+Now that we have UI to create new todos, let’s create the code to display them.
+We’ll use the Handlebars `#collection` helper to display a list of items.
+`#collection` will create an instance of `Ember.CollectionView` that renders
+every item in its underlying Array using the enclosed HTML.
 
-Now that we have UI to create new todos, let’s create the code to display them. We’ll use the Handlebars `#collection` helper to display a list of items. `#collection` will create an instance of Ember.CollectionView that renders every item in its underlying Array using the enclosed HTML.
+    <script type="text/x-handlebars">
+      {{view Todos.CreateTodoView id="new-todo" 
+          placeholder="What needs to be done?"}}
+        
+      {{#collection contentBinding="Todos.todosController"
+          tagName="ul"}}
+        {{content.title}}
+      {{/collection}}
+    </script>
 
-```html
-<script type="text/x-handlebars">
-  {{view Todos.CreateTodoView id="new-todo" 
-    placeholder="What needs to be done?"}}
-    
-  {{#collection contentBinding="Todos.todosController" tagName="ul"}}
-    {{content.title}}
-  {{/collection}}
-</script>
-```
+Notice that we’ve also told the collection to bind its `content` property to our
+`todosController`. For every item in the array controller, the collection view will
+create a new child view that renders the `{{content.title}}` template.
 
-Notice that we’ve also told the collection to bind its `content` property to our todosController. For every item in the array controller, the collection view will create a new child view that renders the `{{content.title}}` template.
+You set up bindings by creating a property whose name ends in `Binding`. In this case,
+we bind `Todos.todosController` to the collection view’s `content` property. When one
+end of a binding changes, Ember will automatically update the other end.
 
-You set up bindings by creating a property whose name ends in Binding. In this case, we bind Todos.todosController to the collection view’s content property. When one end of a binding changes, Ember will automatically update the other end.
+This is a good time to open `index.html` again (or reload if you still have it loaded
+in your browser). It should look the same as before. Type a todo into the text field
+and hit `return`.
 
-This is a good time to open `index.html` again (or reload if you still have it loaded in your browser). It should look the same as before. Type a todo into the text field and hit return.
+Look at that! As soon as we create a new todo and insert it into the `ArrayController`
+the view updates automatically.
 
-Look at that! As soon as we create a new todo and insert it into the array controller, the view updates automatically.
+You’ve now seen a little bit of the power of Ember. By using Ember’s bindings to
+describe the relationship between your data and your views, you were able to change
+the data layer and let Ember do the hard work of updating the view layer for you.
 
-You’ve now seen a little bit of the power of Ember. By using Ember’s bindings to describe the relationship between your data and your views, you were able to change the data layer and let Ember do the hard work of updating the view layer for you.
+This is actually a core concept in Ember, not just something that demos well. Ember’s
+binding system is designed with the view system in mind, which makes it easy to work
+directly with your data and not need to worry about manually keeping your view layer
+in sync. You will see this concept over and over again in the rest of this tutorial
+and in other guides.
 
-This is actually a core concept in Ember, not just something that demos well. Ember’s binding system is designed with the view system in mind, which makes it easy to work directly with your data and not need to worry about manually keeping your view layer in sync. You will see this concept over and over again in the rest of this tutorial and in other guides.
+**More about setting up Bindings [here](http://emberjs.com/#toc_setting-up-bindings)**
 
 ## 8. Getting Things Done
 
