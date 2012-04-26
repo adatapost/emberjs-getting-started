@@ -2,17 +2,12 @@
 
 *This is an adaptation of SproutCore 2.0 Getting Started Guide*
 
-Works for >= Ember.js 0.9.5 version.
-
-Check the application here: <http://frodsan.github.com/emberjs-getting-started>
-Also, You can see the finished source code on this Github repo.
+Check the application here: <http://frodsan.github.com/emberjs-getting-started>.
 
 ## 1. Installing Ember
 
-Download the [Ember Starter Kit](https://github.com/emberjs/starter-kit/downloads)
-if you haven’t already. Unzip and it open the directory in your favorite text
-editor. *In this repo, i'm using my [starter kit version](https://github.com/frodsan/emberjs-starter-kit/downloads)
-that uses jQuery's current version (1.7.1).*
+Download the last [Ember.js Starter Kit](https://github.com/emberjs/starter-kit/downloads) if you haven’t already.
+Unzip it and open the directory in your favorite text editor.
 
 ## 2. Core Concepts
 
