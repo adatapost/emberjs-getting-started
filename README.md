@@ -114,7 +114,7 @@ following:
 
 This code creates a namespace for your application called `Todos`.
 
-## 4. Defining Your Model
+## 4. Defining your model
 
 In this tutorial, we want to create a list for managing todos. Users should be able
 to create a new todo with a specific task, then check it off once it’s done.
@@ -128,7 +128,7 @@ Let’s define our model as a new subclass of `Ember.Object` in `app.js`:
 
 We’ve now defined a `Todo` class with two properties: `title` and `isDone`.
 
-## 5. Managing the Model Using a Controller
+## 5. Managing the model using a controller
 
 Now that we know what our data looks like, let’s create a controller to manage it. Since we want to maintain an ordered list of todos, we’ll use an instance of `Ember.ArrayController`.
 
