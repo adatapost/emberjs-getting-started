@@ -15,81 +15,93 @@ Unzip it and open the directory in your favorite text editor.
 
 These are the three features that make Ember a joy to use:
 
-* Bindings
-* Computed properties
-* Auto-updating templates
+1. Bindings
+2. Computed properties
+3. Auto-updating templates
 
-**Bindings:**
+### Bindings
 
-Use bindings to keep properties between two different objects in sync. You just declare a binding once, and Ember will make sure changes get propagated in either direction.
+Use bindings to keep properties between two different objects in sync. You just declare
+a binding once, and Ember will make sure changes get propagated in either direction.
 
-```javascript
-MyApp.president = Ember.Object.create({
-  name: "Barack Obama"
-});
-     
-MyApp.country = Ember.Object.create({
-  // Ending a property with 'Binding' tells Ember to
-  // create a binding to the presidentName property.
-  presidentNameBinding: 'MyApp.president.name'
-});
+Here's how you create a binding between two objects:
 
-// Later, after Ember has resolved bindings...     
-MyApp.country.get('presidentName');
-// "Barack Obama"
-```
+    MyApp.president = Ember.Object.create({
+      name: "Barack Obama"
+    });
+         
+    MyApp.country = Ember.Object.create({
+      // Ending a property with 'Binding' tells Ember to
+      // create a binding to the presidentName property.
+      presidentNameBinding: 'MyApp.president.name'
+    });
 
-**Computed Properties:**
+    // Later, after Ember has resolved bindings...     
+    MyApp.country.get('presidentName');
+    // "Barack Obama"
+
+Bindings allow you to architect your application using the MVC (Model-View-Controller)
+pattern, then rest easy knowing that data will always flow correctly from layer to 
+layer.
+
+### Computed Properties
 
 Computed properties allow you to treat a function like a property:
 
-```javascript
-MyApp.president = Ember.Object.create({
-  firstName: "Barack",
-  lastName: "Obama",
-     
-  fullName: function() {
-    return this.get('firstName') + ' ' + this.get('lastName');
-       
-  // Call this flag to mark the function as a property
-  }.property()
-});
-     
-MyApp.president.get('fullName');
-// "Barack Obama"
-```
+    MyApp.president = Ember.Object.create({
+      firstName: "Barack",
+      lastName: "Obama",
+         
+      fullName: function() {
+        return this.get('firstName') + ' ' + this.get('lastName');
+           
+      // Call this flag to mark the function as a property
+      }.property()
+    });
+         
+    MyApp.president.get('fullName');
+    // "Barack Obama"
 
-Computed properties are useful because they can work with bindings, just like any other property.
+Computed properties are useful because they can work with bindings, just like any other
+property.
 
-Many computed properties have dependencies on other properties. For example, in the above example, the fullName property depends on *firstName* and *lastName* to determine its value. You can tell Ember about these dependencies like this:
+Many computed properties have dependencies on other properties. For example, in the 
+above example, the `fullName` property depends on `firstName` and `lastName` to 
+determine its value. You can tell Ember about these dependencies like this:
 
-```javascript
-MyApp.president = Ember.Object.create({
-  firstName: "Barack",
-  lastName: "Obama",
-     
-  fullName: function() {
-    return this.get('firstName') + ' ' + this.get('lastName');
-     
-  // Tell Ember that this computed property depends on firstName
-  // and lastName
-  }.property('firstName', 'lastName')
-});
-```
+    MyApp.president = Ember.Object.create({
+      firstName: "Barack",
+      lastName: "Obama",
+         
+      fullName: function() {
+        return this.get('firstName') + ' ' + this.get('lastName');
+         
+      // Tell Ember that this computed property depends on firstName
+      // and lastName
+      }.property('firstName', 'lastName')
+    });
 
-Make sure you list these dependencies so Ember knows when to update bindings that connect to a computed property.
+Make sure you list these dependencies so Ember knows when to update bindings that
+connect to a computed property.
 
 **Auto-updating templates:** 
 
-Ember uses [Handlebars](https://github.com/wycats/handlebars.js/), a semantic templating library. To take data from your JavaScript application and put it into the DOM, create a script tag and put it into your HTML, wherever you'd like the value to appear:
+Ember uses [Handlebars](https://github.com/wycats/handlebars.js/), a semantic 
+templating library. To take data from your JavaScript application and put it into 
+the DOM, create a script tag and put it into your HTML, wherever you'd like the 
+value to appear:
 
-```html
-<script type="text/x-handlebars">
-  The President of the United States is {{MyApp.president.fullName}}.
-</script>
-```
+    <script type="text/x-handlebars">
+      The President of the United States is {{MyApp.president.fullName}}.
+    </script>
 
-Here's the best part: templates are bindings-aware. That means that if you ever change the value of the property that you told us to display, we'll update it for you automatically. And because you've specified dependencies, changes to those properties are reflected as well.
+Hopefully you can see how all three of these powerful tools work together: start with
+some primitive properties, then start building up more sophisticated properties and
+their dependencies using computed properties. Once you've described the data, you only
+have to say how it gets displayed once, and Ember takes care of the rest. It doesn't
+matter how the underlying data changes, whether from an XHR request or the user
+performing an action; your user interface always stays up-to-date. This eliminates
+entire categories of edge cases that developers struggle with every day.
 
 ## 3. Create the Namespace
 
