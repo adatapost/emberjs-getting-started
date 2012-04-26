@@ -340,7 +340,7 @@ automatically dasherize property names into class names.
 
 **All views have a number of properties, including id, class, and classBinding. The
 collection helper allows you to prefix any of those properties with item, which will
-then apply to each of the child item views. For instance, if you use the itemClass
+then apply to each of the child item views. For instance, if you use the `itemClass`
 property on a collection, each item will get that class name.**
 
 Now reload your application in the browser and try it out. As soon as you click a
