@@ -114,7 +114,7 @@ following:
 
 This code creates a namespace for your application called `Todos`.
 
-## 4. Defining your model
+## 4. Defining Your Model
 
 In this tutorial, we want to create a list for managing todos. Users should be able
 to create a new todo with a specific task, then check it off once it’s done.
@@ -128,38 +128,30 @@ Let’s define our model as a new subclass of `Ember.Object` in `app.js`:
 
 We’ve now defined a `Todo` class with two properties: `title` and `isDone`.
 
-## 5. Managing the model using a controller
+## 5. Managing the Model Using a Controller
 
-Now that we know what our data looks like, let’s create a controller to manage it. Since we want to maintain an ordered list of todos, we’ll use an instance of `Ember.ArrayController`.
+Now that we know what our data looks like, let’s create a controller to manage it.
+Since we want to maintain an ordered list of todos, we’ll use an instance of 
+`Ember.ArrayController`.
 
-```javascript
-Todos.todosController = Ember.ArrayController.create({
-  // Initialize the array controller with an empty array.
-  content: []
-});
-```
+    Todos.todosController = Ember.ArrayController.create({});
 
-**Note: ** In MVC frameworks, like Ember, the controller layer bridges the model layer, which is only concerned with a pure-data representation of objects, and the view layer, which is only concerned with representing those objects.
+**Note:** In MVC frameworks like Ember, the controller layer bridges the model layer,
+which is only concerned with a pure-data representation of objects, and the view layer,
+which is only concerned with representing those objects.
 
 Now we have an array controller with no content. Let’s add a method to create a new todo:
-
-```javascript
-// updating previous code
  
-Todos.todosController = Ember.ArrayController.create({
-  // Initialize the array controller with an empty array
-  content: [],
+    Todos.todosController = Ember.ArrayController.create({
+      // Creates a new todo with the passed title then adds it to the array
+      createTodo: function(title) {
+        var todo = Todos.Todo.create({ title: title });
+        this.pushObject(todo);
+      }
+    });
 
-  // Creates a new todo with the passed title then adds it
-  // to the array
-  createTodo: function(title) {
-    var todo = Todos.Todo.create({ title: title });
-    this.pushObject(todo);
-  }
-});
-```
-
-`Ember.ArrayController` acts as a proxy onto its content Array. Ember will propagate any modifications made to the ArrayController to the content Array.
+`Ember.ArrayController` acts as a proxy onto its `content` Array property. Ember will
+propagate any modifications made to the ArrayController to the content Array.
 
 ## 6. Doing It with Style
 
