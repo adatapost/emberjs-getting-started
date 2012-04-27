@@ -2,7 +2,7 @@
 
 *This is an adaptation of the extinct SproutCore 2.0 Getting Started Guide*
 
-Check the application here: <http://frodsan.github.com/emberjs-getting-started>.
+Check the application [here](http://frodsan.github.com/emberjs-getting-started).
 
 ## 1. Core Concepts
 
