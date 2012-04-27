@@ -11,8 +11,8 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="shortcut icon" href="favicon.ico">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="stylesheet" href="css/style.css?v=2">
   <link rel="stylesheet" href="css/todos.css">
 
@@ -25,47 +25,33 @@
 
   <script type="text/x-handlebars">
     {{view Todos.CreateTodoView id="new-todo" 
-      placeholder="What needs to be done?"}}
+        placeholder="What needs to be done?"}}
      
     {{#view Todos.StatsView id="stats"}}
       {{#view Ember.Button classBinding="isActive"
-        target="Todos.todosController"
-        action="clearCompletedTodos"}}
+          target="Todos.todosController"
+          action="clearCompletedTodos"}}
         Clear Completed Todos
       {{/view}}
+
       {{remainingString}} remaining.
     {{/view}}
 
     {{view Ember.Checkbox class="mark-all-done"
-      title="Mark All as Done"
-      valueBinding="Todos.todosController.allAreDone"}}
+        title="Mark All as Done"
+        valueBinding="Todos.todosController.allAreDone"}}
 
-    {{#collection contentBinding="Todos.todosController" tagName="ul"
-      itemClassBinding="content.isDone"}}
+    {{#collection contentBinding="Todos.todosController"
+        tagName="ul" itemClassBinding="content.isDone"}}
       {{view Ember.Checkbox titleBinding="content.title"
-        valueBinding="content.isDone"}}
+          valueBinding="content.isDone"}}
     {{/collection}}
   </script>
 
-  <a href="http://github.com/frodsan/emberjs-getting-started">
-    <img style="position: fixed; top: 0; right: 0; border: 0;" 
-         src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
-         alt="Fork me on GitHub">
-  </a>
-
-  <script 
-    src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
-  </script>
-  <script>
-    !window.jQuery && document.write(unescape('%3Cscript src="js/libs/jquery-1.7.1.min.js"%3E%3C/script%3E'))
-  </script>
-
-  <!-- ember development
-  <script src="js/libs/ember-0.9.5.js"></script>
-  -->
-
-  <script src="js/libs/ember-0.9.5.min.js"></script>
-
+  <!-- The missing protocol means that it will match the current protocol, either http or https. If running locally, we use the local jQuery. -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.2.min.js"><\/script>')</script>
+  <script src="js/libs/ember-0.9.7.1.min.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

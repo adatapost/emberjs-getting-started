@@ -1,18 +1,18 @@
-Todos = Ember.Application.create();
+window.Todos = Ember.Application.create();
 
 Todos.Todo = Ember.Object.extend({
-  title: null,
+  title:  null,
   isDone: false
 });
  
 Todos.todosController = Ember.ArrayController.create({
   // Initialize the array controller with an empty array.
   content: [],
- 
-  // Creates a new todo with the passed title, then adds it
-  // to the array.
+
+  // Creates a new todo with the passed title, then adds it to the array.
   createTodo: function(title) {
     var todo = Todos.Todo.create({ title: title });
+
     this.pushObject(todo);
   },
 
@@ -27,7 +27,7 @@ Todos.todosController = Ember.ArrayController.create({
   allAreDone: function(key, value) {
     if (value !== undefined) {
       this.setEach('isDone', value);
- 
+
       return value;
     } else {
       return !!this.get('length') && this.everyProperty('isDone', true);
@@ -51,6 +51,7 @@ Todos.StatsView = Ember.View.extend({
  
   remainingString: function() {
     var remaining = this.get('remaining');
+
     return remaining + (remaining === 1 ? " item" : " items");
   }.property('remaining')
 });
