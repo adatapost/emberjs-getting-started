@@ -521,7 +521,7 @@ or not every todo is done. It might look something like this:
 
 **Ember has many enumerable helpers. `everyProperty(‘isDone’, true)` returns true if
 every item in the array has an `isDone` property that evaluates to true. You can
-find out more in the [Enumerables guide](http://emberjs.com/#toc_the-ember-enumerable-api)**
+find out more in the [Ember Enumerable API guide](http://emberjs.com/#toc_the-ember-enumerable-api)**
 
 Next, open `index.html`, we’ll create a checkbox view to mark all items complete and
 bind its value to the controller’s property:
