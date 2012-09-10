@@ -1,6 +1,6 @@
 # Getting Started with Ember.js
 
-*This is an adaptation of the extinct SproutCore 2.0 Getting Started Guide*
+*DEPRECATED: Check <http://emberjs.com/> for new information.*
 
 Check the application [here](http://www.frodsan.com/emberjs-getting-started/)
 
@@ -22,19 +22,19 @@ Here's how you create a binding between two objects:
     MyApp.president = Ember.Object.create({
       name: "Barack Obama"
     });
-         
+
     MyApp.country = Ember.Object.create({
       // Ending a property with 'Binding' tells Ember to
       // create a binding to the presidentName property.
       presidentNameBinding: 'MyApp.president.name'
     });
 
-    // Later, after Ember has resolved bindings...     
+    // Later, after Ember has resolved bindings...
     MyApp.country.get('presidentName');
     // "Barack Obama"
 
 Bindings allow you to architect your application using the MVC (Model-View-Controller)
-pattern, then rest easy knowing that data will always flow correctly from layer to 
+pattern, then rest easy knowing that data will always flow correctly from layer to
 layer.
 
 ### Computed Properties
@@ -44,31 +44,31 @@ Computed properties allow you to treat a function like a property:
     MyApp.president = Ember.Object.create({
       firstName: "Barack",
       lastName: "Obama",
-         
+
       fullName: function() {
         return this.get('firstName') + ' ' + this.get('lastName');
-           
+
       // Call this flag to mark the function as a property
       }.property()
     });
-         
+
     MyApp.president.get('fullName');
     // "Barack Obama"
 
 Computed properties are useful because they can work with bindings, just like any other
 property.
 
-Many computed properties have dependencies on other properties. For example, in the 
-above example, the `fullName` property depends on `firstName` and `lastName` to 
+Many computed properties have dependencies on other properties. For example, in the
+above example, the `fullName` property depends on `firstName` and `lastName` to
 determine its value. You can tell Ember about these dependencies like this:
 
     MyApp.president = Ember.Object.create({
       firstName: "Barack",
       lastName: "Obama",
-         
+
       fullName: function() {
         return this.get('firstName') + ' ' + this.get('lastName');
-         
+
       // Tell Ember that this computed property depends on firstName
       // and lastName
       }.property('firstName', 'lastName')
@@ -77,11 +77,11 @@ determine its value. You can tell Ember about these dependencies like this:
 Make sure you list these dependencies so Ember knows when to update bindings that
 connect to a computed property.
 
-**Auto-updating templates:** 
+**Auto-updating templates:**
 
-Ember uses [Handlebars](https://github.com/wycats/handlebars.js/), a semantic 
-templating library. To take data from your JavaScript application and put it into 
-the DOM, create a script tag and put it into your HTML, wherever you'd like the 
+Ember uses [Handlebars](https://github.com/wycats/handlebars.js/), a semantic
+templating library. To take data from your JavaScript application and put it into
+the DOM, create a script tag and put it into your HTML, wherever you'd like the
 value to appear:
 
     <script type="text/x-handlebars">
@@ -139,7 +139,7 @@ only concerned with a pure-data representation of objects, and the view layer, w
 only concerned with representing those objects.
 
 Now that we know what our data looks like, let’s create a controller to manage it.
-Since we want to maintain an ordered list of todos, we’ll use an instance of 
+Since we want to maintain an ordered list of todos, we’ll use an instance of
 `Ember.ArrayController`:
 
     Todos.todosController = Ember.ArrayController.create({
@@ -153,7 +153,7 @@ property. Ember will propagate any modifications made to the `ArrayController` t
 
 Now we have an array controller with no content. Let’s add a method to create a new
 todo:
- 
+
     Todos.todosController = Ember.ArrayController.create({
       // Initialize the array controller with an empty array
       content: [],
@@ -170,7 +170,7 @@ todo:
 
 We’ve provided a simple stylesheet to give the application some style. Download the
 [CSS file](https://raw.github.com/frodsan/emberjs-getting-started/master/css/todos.css)
-and add it to your project’s `css` directory. Then include the next line to the 
+and add it to your project’s `css` directory. Then include the next line to the
 `<head>` tag in `index.html`:
 
     <link rel="stylesheet" href="css/todos.css">
@@ -226,7 +226,7 @@ Insert this code in `js/app.js` file:
     Todos.CreateTodoView = Ember.TextField.extend({
       insertNewline: function() {
         var value = this.get('value');
-     
+
         if (value) {
           Todos.todosController.createTodo(value);
           this.set('value', '');
@@ -244,7 +244,7 @@ subclass. Switch back to `index.html` and update the view helper to say
 `Todos.CreateTodoView` instead of `Ember.TextField`.
 
     <script type="text/x-handlebars">
-      {{view Todos.CreateTodoView id="new-todo" 
+      {{view Todos.CreateTodoView id="new-todo"
           placeholder="What needs to be done?"}}
     </script>
 
@@ -254,9 +254,9 @@ We’ll use the Handlebars `#collection` helper to display a list of items.
 every item in its underlying Array using the enclosed HTML.
 
     <script type="text/x-handlebars">
-      {{view Todos.CreateTodoView id="new-todo" 
+      {{view Todos.CreateTodoView id="new-todo"
           placeholder="What needs to be done?"}}
-        
+
       {{#collection contentBinding="Todos.todosController"
           tagName="ul"}}
         {{content.title}}
@@ -303,9 +303,9 @@ the checkbox is changed by the user. Let’s update the Handlebars template in
 `index.html` to look like the following:
 
     <script type="text/x-handlebars">
-      {{view Todos.CreateTodoView id="new-todo" 
+      {{view Todos.CreateTodoView id="new-todo"
           placeholder="What needs to be done?"}}
-       
+
       {{#collection contentBinding="Todos.todosController" tagName="ul"}}
         {{view Ember.Checkbox titleBinding="content.title"
             valueBinding="content.isDone"}}
@@ -371,7 +371,7 @@ Let’s go ahead and implement that view in `app.js` now:
 
     Todos.StatsView = Ember.View.extend({
       remainingBinding: 'Todos.todosController.remaining',
-     
+
       remainingString: function() {
         var remaining = this.get('remaining');
 
@@ -399,18 +399,18 @@ When we have information that views need but is based on aggregate information a
 our models, the array controller is a good place to put it. Let’s add a new computed
 property to `todosController` in `app.js`:
 
- 
+
     Todos.todosController = Ember.ArrayController.create({
       // Initialize the array controller with an empty array.
       content: [],
-     
+
       // Creates a new todo with the passed title, then adds it to the array.
       createTodo: function(title) {
         var todo = Todos.Todo.create({ title: title });
 
         this.pushObject(todo);
       },
-     
+
       remaining: function() {
         return this.filterProperty('isDone', false).get('length');
       }.property('@each.isDone')
@@ -441,7 +441,7 @@ Let’s add a new `clearCompletedTodos` method to `Todos.todosController`.
     Todos.todosController = Ember.ArrayController.create({
       // Initialize the array controller with an empty array.
       content: [],
-     
+
       // Creates a new todo with the passed title, then adds it to the array.
       createTodo: function(title) {
         var todo = Todos.Todo.create({ title: title });
@@ -452,7 +452,7 @@ Let’s add a new `clearCompletedTodos` method to `Todos.todosController`.
       remaining: function() {
         return this.filterProperty('isDone', false).get('length');
       }.property('@each.isDone'),
-     
+
       clearCompletedTodos: function() {
         this.filterProperty('isDone', true).forEach(this.removeObject, this);
       }
@@ -498,7 +498,7 @@ or not every todo is done. It might look something like this:
     Todos.todosController = Ember.ArrayController.create({
       // Initialize the array controller with an empty array.
       content: [],
-     
+
       // Creates a new todo with the passed title, then adds it to the array.
       createTodo: function(title) {
         var todo = Todos.Todo.create({ title: title });
@@ -509,7 +509,7 @@ or not every todo is done. It might look something like this:
       remaining: function() {
         return this.filterProperty('isDone', false).get('length');
       }.property('@each.isDone'),
-      
+
       clearCompletedTodos: function() {
         this.filterProperty('isDone', true).forEach(this.removeObject, this);
       },
