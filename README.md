@@ -1,6 +1,7 @@
 # Getting Started with Ember.js
 
 Check the application [here](http://emberjs.com/examples/todos/).
+You can get the complete code [here](https://github.com/emberjs/examples/tree/master/todos).
 
 ## 1. Core Concepts
 
