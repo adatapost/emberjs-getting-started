@@ -203,7 +203,8 @@ via CSS), as well as a placeholder attribute that will be displayed in modern HT
 browsers.
 
 **For more information about using Handlebars, visit the [Handlebars website](http://www.handlebarsjs.com/).
-To learn more about using Handlebars with Ember, make sure to check out the [Using Handlebars Templates guide](http://emberjs.com/#toc_describing-your-ui-with-handlebars).**
+To learn more about using Handlebars with Ember, make sure to check out the
+[Using Handlebars Templates guide](http://emberjs.com/documentation/#toc_describing-your-ui-with-handlebars).
 
 Now that we’ve got model, view, and controller represented, it’s time to open the app
 in our browser and see how it looks.
@@ -520,7 +521,7 @@ or not every todo is done. It might look something like this:
 
 **Ember has many enumerable helpers. `everyProperty(‘isDone’, true)` returns true if
 every item in the array has an `isDone` property that evaluates to true. You can
-find out more in the [Ember Enumerable API guide](http://emberjs.com/#toc_the-ember-enumerable-api)**
+find out more in the [Ember Enumerable API guide](http://emberjs.com/documentation/#toc_the-ember-enumerable-api).
 
 Next, open `index.html`, we’ll create a checkbox view to mark all items complete and
 bind its value to the controller’s property:
