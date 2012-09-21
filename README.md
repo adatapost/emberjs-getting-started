@@ -1,8 +1,6 @@
 # Getting Started with Ember.js
 
-*DEPRECATED: Check <http://emberjs.com/> for new information.*
-
-Check the application [here](http://www.frodsan.com/emberjs-getting-started/)
+Check the application [here](http://emberjs.com/examples/todos/).
 
 ## 1. Core Concepts
 
@@ -19,11 +17,11 @@ a binding once, and Ember will make sure changes get propagated in either direct
 
 Here's how you create a binding between two objects:
 
-    MyApp.president = Ember.Object.create({
+    MyApp.president = Em.Object.create({
       name: "Barack Obama"
     });
 
-    MyApp.country = Ember.Object.create({
+    MyApp.country = Em.Object.create({
       // Ending a property with 'Binding' tells Ember to
       // create a binding to the presidentName property.
       presidentNameBinding: 'MyApp.president.name'
@@ -41,7 +39,7 @@ layer.
 
 Computed properties allow you to treat a function like a property:
 
-    MyApp.president = Ember.Object.create({
+    MyApp.president = Em.Object.create({
       firstName: "Barack",
       lastName: "Obama",
 
@@ -62,7 +60,7 @@ Many computed properties have dependencies on other properties. For example, in 
 above example, the `fullName` property depends on `firstName` and `lastName` to
 determine its value. You can tell Ember about these dependencies like this:
 
-    MyApp.president = Ember.Object.create({
+    MyApp.president = Em.Object.create({
       firstName: "Barack",
       lastName: "Obama",
 
@@ -98,19 +96,19 @@ entire categories of edge cases that developers struggle with every day.
 
 ## 2. Installing Ember
 
-Download the lastest [Ember.js Starter Kit](https://github.com/downloads/emberjs/starter-kit/starter-kit.0.9.7.1.zip)
+Download the lastest [Ember.js Starter Kit](https://github.com/emberjs/starter-kit/downloads)
 if you haven’t already. Unzip it and open the directory in your favorite text editor.
 
 ## 3. Creating the Application Namespace
 
-Every Ember app should have an instance of `Ember.Application`. This object will
+Every Ember app should have an instance of `Em.Application`. This object will
 serve as the globally-accessible namespace for all of the other classes and instances
 in your app.
 
 Open the JavaScript file located at `js/app.js`. Replace the default content with the
 following:
 
-    window.Todos = Ember.Application.create();
+    window.Todos = Em.Application.create();
 
 This code creates a namespace for your application called `Todos`.
 
@@ -119,9 +117,9 @@ This code creates a namespace for your application called `Todos`.
 In this tutorial, we want to create a list for managing todos. Users should be able
 to create a new todo with a specific task, then check it off once it’s done.
 
-Let’s define our model as a new subclass of `Ember.Object` in `app.js`:
+Let’s define our model as a new subclass of `Em.Object` in `app.js`:
 
-    Todos.Todo = Ember.Object.extend({
+    Todos.Todo = Em.Object.extend({
       title:  null,
       isDone: false
     });
@@ -140,21 +138,21 @@ only concerned with representing those objects.
 
 Now that we know what our data looks like, let’s create a controller to manage it.
 Since we want to maintain an ordered list of todos, we’ll use an instance of
-`Ember.ArrayController`:
+`Em.ArrayController`:
 
-    Todos.todosController = Ember.ArrayController.create({
+    Todos.todosController = Em.ArrayController.create({
       // Initialize the array controller with an empty array.
       content: []
     });
 
-Behind the scenes, `Ember.ArrayController` acts as a proxy onto its `content` Array
+Behind the scenes, `Em.ArrayController` acts as a proxy onto its `content` Array
 property. Ember will propagate any modifications made to the `ArrayController` to the
 `content` property.
 
 Now we have an array controller with no content. Let’s add a method to create a new
 todo:
 
-    Todos.todosController = Ember.ArrayController.create({
+    Todos.todosController = Em.ArrayController.create({
       // Initialize the array controller with an empty array
       content: [],
 
@@ -195,7 +193,7 @@ and replace it with the following Handlebars template, which emits a text field 
 users to type in:
 
     <script type="text/x-handlebars">
-      {{view Ember.TextField id="new-todo"
+      {{view Em.TextField id="new-todo"
           placeholder="What needs to be done?"}}
     </script>
 
@@ -223,7 +221,7 @@ dynamic content or handle events, you will use a view object.**
 
 Insert this code in `js/app.js` file:
 
-    Todos.CreateTodoView = Ember.TextField.extend({
+    Todos.CreateTodoView = Em.TextField.extend({
       insertNewline: function() {
         var value = this.get('value');
 
@@ -235,13 +233,13 @@ Insert this code in `js/app.js` file:
     });
 
 Since `CreateTodoView` will handle events for a text field, we create a subclass of
-`Ember.TextField`, which provides several conveniences for working with these input
+`Em.TextField`, which provides several conveniences for working with these input
 controls. For example, you can access the `value` property and respond to higher level
 events, such as `insertNewline`, when the user presses enter.
 
 Now that we have defined our view, let’s update the template to use our new view
 subclass. Switch back to `index.html` and update the view helper to say
-`Todos.CreateTodoView` instead of `Ember.TextField`.
+`Todos.CreateTodoView` instead of `Em.TextField`.
 
     <script type="text/x-handlebars">
       {{view Todos.CreateTodoView id="new-todo"
@@ -250,7 +248,7 @@ subclass. Switch back to `index.html` and update the view helper to say
 
 Now that we have UI to create new todos, let’s create the code to display them.
 We’ll use the Handlebars `#collection` helper to display a list of items.
-`#collection` will create an instance of `Ember.CollectionView` that renders
+`#collection` will create an instance of `Em.CollectionView` that renders
 every item in its underlying Array using the enclosed HTML.
 
     <script type="text/x-handlebars">
@@ -307,13 +305,13 @@ the checkbox is changed by the user. Let’s update the Handlebars template in
           placeholder="What needs to be done?"}}
 
       {{#collection contentBinding="Todos.todosController" tagName="ul"}}
-        {{view Ember.Checkbox titleBinding="content.title"
+        {{view Em.Checkbox titleBinding="content.title"
             valueBinding="content.isDone"}}
       {{/collection}}
     </script>
 
 Let’s take a second to talk about the bindings we just set up. For every item in its
-underlying array, `Ember.CollectionView` will create a new item view whose `content`
+underlying array, `Em.CollectionView` will create a new item view whose `content`
 property contains the object the view should represent. In our case, there will be a
 child view for each todo. Since the checkbox is a child view of each item view, when
 we bind to `content.title`, we’re saying to bind to the `title` property of the Todo
@@ -331,7 +329,7 @@ We’ll use `itemClassBinding` property on the collection helper to set up this 
 
     {{#collection contentBinding="Todos.todosController"
         tagName="ul" itemClassBinding="content.isDone"}}
-      {{view Ember.Checkbox titleBinding="content.title"
+      {{view Em.Checkbox titleBinding="content.title"
           valueBinding="content.isDone"}}
     {{/collection}}
 
@@ -369,7 +367,7 @@ automatically whenever the value changes.
 
 Let’s go ahead and implement that view in `app.js` now:
 
-    Todos.StatsView = Ember.View.extend({
+    Todos.StatsView = Em.View.extend({
       remainingBinding: 'Todos.todosController.remaining',
 
       remainingString: function() {
@@ -400,7 +398,7 @@ our models, the array controller is a good place to put it. Let’s add a new co
 property to `todosController` in `app.js`:
 
 
-    Todos.todosController = Ember.ArrayController.create({
+    Todos.todosController = Em.ArrayController.create({
       // Initialize the array controller with an empty array.
       content: [],
 
@@ -438,7 +436,7 @@ completed. As you have learned, we will want to make that change to the
 
 Let’s add a new `clearCompletedTodos` method to `Todos.todosController`.
 
-    Todos.todosController = Ember.ArrayController.create({
+    Todos.todosController = Em.ArrayController.create({
       // Initialize the array controller with an empty array.
       content: [],
 
@@ -458,11 +456,11 @@ Let’s add a new `clearCompletedTodos` method to `Todos.todosController`.
       }
     });
 
-Next, let’s add a button to our template. Open `index.html` and add a `Ember.Button`
+Next, let’s add a button to our template. Open `index.html` and add a `Em.Button`
 control inside the HTML for `StatsView` as shown here:
 
     {{#view Todos.StatsView id="stats"}}
-      {{#view Ember.Button classBinding="isActive"
+      {{#view Em.Button classBinding="isActive"
           target="Todos.todosController"
           action="clearCompletedTodos"}}
         Clear Completed Todos
@@ -471,12 +469,12 @@ control inside the HTML for `StatsView` as shown here:
       {{remainingString}} remaining.
     {{/view}}
 
-We’ve defined an instance of `Ember.Button`, which calls a method on an object when it
+We’ve defined an instance of `Em.Button`, which calls a method on an object when it
 is clicked. In this case we’ve told the button to call the `clearCompletedTodos` method
 (its `action`) on the `Todos.todosController` object (its `target`).
 
 We’ve also told it to add an `is-active` class to the view when it is clicked or
-tapped. Every `Ember.Button` has an `isActive` property that will be true when it is
+tapped. Every `Em.Button` has an `isActive` property that will be true when it is
 in the process of being clicked. This allows us to display a visual cue to the user
 that they have hit the right target.
 
@@ -495,7 +493,7 @@ already done. We just need a way to mark every Todo complete.
 Let’s first create a new computed property on our controller that describes whether
 or not every todo is done. It might look something like this:
 
-    Todos.todosController = Ember.ArrayController.create({
+    Todos.todosController = Em.ArrayController.create({
       // Initialize the array controller with an empty array.
       content: [],
 
@@ -526,7 +524,7 @@ find out more in the [Ember Enumerable API guide](http://emberjs.com/#toc_the-em
 Next, open `index.html`, we’ll create a checkbox view to mark all items complete and
 bind its value to the controller’s property:
 
-    {{view Ember.Checkbox class="mark-all-done"
+    {{view Em.Checkbox class="mark-all-done"
         title="Mark All as Done"
         valueBinding="Todos.todosController.allAreDone"}}
 
