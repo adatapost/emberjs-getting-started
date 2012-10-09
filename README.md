@@ -259,13 +259,13 @@ every item in its underlying Array using the enclosed HTML.
 
       {{#collection contentBinding="Todos.todosController"
           tagName="ul"}}
-        {{content.title}}
+        {{view.content.title}}
       {{/collection}}
     </script>
 
 Notice that we’ve also told the collection to bind its `content` property to our
 `todosController`. For every item in the array controller, the collection view will
-create a new child view that renders the `{{content.title}}` template.
+create a new child view that renders the `{{view.content.title}}` template.
 
 You set up bindings by creating a property whose name ends in `Binding`. In this case,
 we bind `Todos.todosController` to the collection view’s `content` property. When one
@@ -307,8 +307,8 @@ the checkbox is changed by the user. Let’s update the Handlebars template in
           placeholder="What needs to be done?"}}
 
       {{#collection contentBinding="Todos.todosController" tagName="ul"}}
-        {{view Em.Checkbox titleBinding="content.title"
-            valueBinding="content.isDone"}}
+        {{view Em.Checkbox titleBinding="view.content.title"
+            valueBinding="view.content.isDone"}}
       {{/collection}}
     </script>
 
@@ -316,7 +316,7 @@ Let’s take a second to talk about the bindings we just set up. For every item 
 underlying array, `Em.CollectionView` will create a new item view whose `content`
 property contains the object the view should represent. In our case, there will be a
 child view for each todo. Since the checkbox is a child view of each item view, when
-we bind to `content.title`, we’re saying to bind to the `title` property of the Todo
+we bind to `view.content.title`, we’re saying to bind to the `title` property of the Todo
 object represented by the item view.
 
 Under the hood, Ember binds an event handler to the change event of the checkbox
@@ -330,9 +330,9 @@ bind the class of each item to the object’s `isDone` property.
 We’ll use `itemClassBinding` property on the collection helper to set up this binding:
 
     {{#collection contentBinding="Todos.todosController"
-        tagName="ul" itemClassBinding="content.isDone"}}
-      {{view Em.Checkbox titleBinding="content.title"
-          valueBinding="content.isDone"}}
+        tagName="ul" itemClassBinding="view.content.isDone"}}
+      {{view Em.Checkbox titleBinding="view.content.title"
+          valueBinding="view.content.isDone"}}
     {{/collection}}
 
 This property sets up a binding on each of the item views. Each item will get the class
